@@ -1,0 +1,36 @@
+﻿@using MVC5Beginners.Models;
+@model IEnumerable<EmployeeViewModel>
+
+@{
+    ViewBag.Title = "Employee List";
+}
+
+<h2>@ViewBag.Title</h2>
+<div style="padding-bottom:50px">
+    <input class="btn btn-success" type="button" value="Create employee" onclick="location.href='@Url.Action("Create","Employee")'" />
+</div>
+<div class="row">
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
+                <th class="col-sm-1">Id</th>
+                <th class="col-sm-4">Name</th>
+                <th class="col-sm-4">Department</th>
+                <th class="col-sm-3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (EmployeeViewModel emp in Model)
+            {
+                <tr>
+                    <td class="col-sm-1">@emp.EmpId</td>
+                    <td class="col-sm-4">@emp.EmpFName - @emp.EmpLName</td>
+                    <td class="col-sm-4">@emp.Department</td>
+                    <td><button class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Employee", new {EmpId = emp.EmpId })'">
+                        <i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

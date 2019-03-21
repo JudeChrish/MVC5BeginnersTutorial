@@ -1,0 +1,19 @@
+﻿@using MVC5Beginners.Models;
+@{
+    ViewBag.Title = "GetCountries";
+}
+
+@model Employee
+
+<h2>GetCountries</h2>
+<ol>
+    @foreach (string country in (List<string>)ViewData["countrylist"])
+    {
+       <li>@country</li> 
+    }
+</ol>
+<div class="row">
+    <div class="col-md-3">@Model.EmpFName</div>
+    <div class="col-md-2">@Model.EmpLName</div>
+    <div class="col-md-4">@Model.Department</div>
+</div>

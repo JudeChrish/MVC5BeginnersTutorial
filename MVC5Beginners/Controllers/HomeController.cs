@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MVC5Beginners.Models;
 
 namespace MVC5Beginners.Controllers
 {
@@ -25,6 +26,14 @@ namespace MVC5Beginners.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ViewResult GetCountries()
+        {
+            ViewData["countrylist"] = new List<string>() { "Sri Lanka", "India", "Pakistan" };
+            Employee employee = new Employee { EmpFName = "Chrishantha", EmpLName = "Rajasekara", Department = "Software",
+                EmpId = 1, EmpStatus = 1 };
+            return View(employee);
         }
     }
 }
