@@ -192,6 +192,7 @@
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\Delete.cshtml" />
+    <Content Include="Views\Employee\UpdateEmploye.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
