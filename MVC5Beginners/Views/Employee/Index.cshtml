@@ -26,8 +26,15 @@
                     <td class="col-sm-1">@emp.EmpId</td>
                     <td class="col-sm-4">@emp.EmpFName - @emp.EmpLName</td>
                     <td class="col-sm-4">@emp.Department</td>
-                    <td><button class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Employee", new {EmpId = emp.EmpId })'">
-                        <i class="fas fa-trash-alt"></i></button>
+                    <td>
+                        <button class="btn btn-primary" 
+                                onclick="location.href='@Url.Action("UpdateEmploye","Employee", new {empId = emp.EmpId})'">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="btn btn-danger" 
+                                onclick="location.href='@Url.Action("Delete","Employee", new {EmpId = emp.EmpId })'">
+                        <i class="fas fa-trash-alt"></i>
+                        </button>
                     </td>
                 </tr>
             }
