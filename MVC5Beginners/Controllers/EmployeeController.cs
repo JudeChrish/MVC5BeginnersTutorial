@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Text;
+using System.Web.Configuration;
 
 namespace MVC5Beginners.Controllers
 {
     public class EmployeeController : Controller
     {
-        public const string BaseUri = "http://localhost:64756/";
+        //public const string BaseUri = "http://localhost:64756/";
+        public string BaseUri = WebConfigurationManager.AppSettings["BaseUri"];
         // GET: Employee
         public async Task<ActionResult> Index()
         {
@@ -24,7 +26,7 @@ namespace MVC5Beginners.Controllers
                 client.BaseAddress = new Uri(BaseUri);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.GetAsync("api/Employee");
+                HttpResponseMessage response = await client.GetAsync("Employee/SakreeyaOkkomaSewakayoEwanna");
 
 
                 if (response.IsSuccessStatusCode)
@@ -58,7 +60,7 @@ namespace MVC5Beginners.Controllers
                     var emp = javaScritpSerializer.Serialize(employeeView);
                     StringContent stringContent = new StringContent(emp, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PostAsync("api/Employee/SaveSelectedEmployee", stringContent);
+                    HttpResponseMessage response = await client.PostAsync("Employee/MemaSewakayawaEthulathKranna", stringContent);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -79,7 +81,8 @@ namespace MVC5Beginners.Controllers
                 client.BaseAddress = new Uri(BaseUri);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                string SubURI = string.Format("api/Employee/GetSpecificEmp?Id={0}", empId);
+                //string SubURI = string.Format("Employee/GetSpecificEmp?Id={0}", empId);
+                  string SubURI = string.Format("Employee/MemaAnkayataAdalaSewakayawaEwanna/{0}", empId);
                 HttpResponseMessage response = await client.GetAsync(SubURI);
 
                 if (response.IsSuccessStatusCode)
@@ -100,17 +103,21 @@ namespace MVC5Beginners.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        public async Task<ActionResult> Delete_PostAsync(int empId)
+        public async Task<ActionResult> Delete_PostAsync()
         {
+            EmployeeViewModel emp = new EmployeeViewModel();
+            TryUpdateModel(emp);
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUri);
-                HttpResponseMessage httpResponseMessage = await client.DeleteAsync("api/Employee/DeleteSelectedEmp?emp=" + empId);
+                //HttpResponseMessage httpResponseMessage = await client.DeleteAsync("Employee/MemaSewakayawaAkreeyaKaranna?emp=" + empId);
+                string SubURI = string.Format("Employee/MemaSewakayawaAkreeyaKaranna/{0}", emp.EmpId);
+                HttpResponseMessage httpResponseMessage = await client.DeleteAsync(SubURI);
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
-                return View();
+                return RedirectToAction("Delete", new { empId = emp.EmpId });
             }
         }
 
@@ -124,7 +131,8 @@ namespace MVC5Beginners.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.BaseAddress = new Uri(BaseUri);
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                string SubURI = string.Format("api/Employee/GetSpecificEmp?Id={0}", empId);
+                //string SubURI = string.Format("Employee/GetSpecificEmp?Id={0}", empId);
+                string SubURI = string.Format("Employee/MemaAnkayataAdalaSewakayawaEwanna/{0}", empId); 
                 HttpResponseMessage response = await client.GetAsync(SubURI);
 
                 if (response.IsSuccessStatusCode)
@@ -148,7 +156,8 @@ namespace MVC5Beginners.Controllers
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(BaseUri);
-                    string SubURI = string.Format("api/Employee/GetSpecificEmp?Id={0}", employeeView.EmpId);
+                    //string SubURI = string.Format("Employee/GetSpecificEmp?Id={0}", employeeView.EmpId);
+                    string SubURI = string.Format("Employee/SewakayawaYawathkaleenaKaranna/{0}", employeeView.EmpId);
                     JavaScriptSerializer scriptSerializer = new JavaScriptSerializer();
                     var editEmp = scriptSerializer.Serialize(employeeView);
                     StringContent sContent = new StringContent(editEmp,Encoding.UTF8,"application/json");
